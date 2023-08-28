@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="greet1" class="com.kh.di.Greet" />
+	
+	<!-- 생성자 주입 -->
+	<bean id="greet2" class="com.kh.di.Greet" >
+		<constructor-arg value="Hello Spring~.~" />
+	</bean>
+	
+	<!-- setter 주입 -->
+	<bean id="greet3" class="com.kh.di.Greet" >
+		<property name="message" value="주연이 오늘 지각했어 안타까워"/>
+	</bean>
+	
+	
+	<bean id="str" class="java.lang.String">
+		<constructor-arg value="Spring Bean~" />
+	</bean>
+	
+	<bean id="greet4" class="com.kh.di.Greet">
+		<property name="message" ref="str"/>
+	</bean>
+
+</beans>
