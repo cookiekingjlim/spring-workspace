@@ -31,4 +31,43 @@
 
 ## Spring AOP 구현 방법
 
-- 스프링의 AOP 네임스페이스를 사용하여 빈을 애스펙트로 전환할 수 있다.
+- AspectJ 애노테이션 적용을 위해서는 설정 파일에 아래와 같이 프록시 설정을 해야한다.
+
+```xml
+<beans>
+    <aop:aspectj-autoproxy/>
+</beans>
+```
+
+- AspectJ의 애노테이션을 사용하여 애스펙트를 생성할 수 있다.
+
+```java
+@Aspect
+@Component
+public class 클래스명 {
+    @Before("포인트컷 지정자")
+    public void before() {
+        // 메소드 실행 전에 적용되는 어드바이스를 정의
+    }
+
+    @After("포인트컷 지정자")
+    public void after() {
+        // 메소드 실행 후에 적용되는 어드바이스를 정의
+    }
+
+    @AfterReturning("포인트컷 지정자")
+    public void success() {
+        // 메소드가 정상적으로 실행된 후에 적용되는 어드바이스를 정의
+    }
+
+    @AfterThrowing("포인트컷 지정자")
+    public void fail() {
+        // 메소드가 예외를 발생시킬 때 적용되는 어드바이스를 정의
+    }
+
+    @Around("포인트컷 지정자")
+    public String around(ProceedingJoinPoint joinpoint) {
+        // 메소드 호출 이전, 이후, 예외 발생 등 모든 시점에 적용 가능한 어드바이스를 정의
+    }
+}
+```
