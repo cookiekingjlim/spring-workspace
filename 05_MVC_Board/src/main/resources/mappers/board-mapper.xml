@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+	<insert id="insert" parameterType="Board" useGeneratedKeys="true" keyProperty="no" keyColumn="no">
+	INSERT INTO board(no,title,content,writer)
+	VALUES (SEQ_BOARD.NEXTVAL, #{title},#{content},#{writer})
+	</insert>
+	
+	<select id="selectAll" resultType="Board">
+	SELECT no, title, content, writer, regdate
+	FROM board
+	</select>
+	
+
+
+</mapper>
