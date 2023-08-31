@@ -8,10 +8,33 @@
 	</insert>
 	
 	<select id="selectAll" resultType="Board">
-	SELECT no, title, content, writer, regdate
-	FROM board
+	<![CDATA[
+	SELECT NUM, NO, TITLE, WRITER, REGDATE
+	FROM (SELECT /*+ INDEX_DESC(board PK_BOARD) */ 
+    	  ROWNUM NUM, NO, TITLE, WRITER, REGDATE
+     	  FROM board
+      	  WHERE ROWNUM <= #{page} * #{amount})
+	WHERE NUM > (#{page}-1) * #{amount}
+	]]>
 	</select>
 	
+	<select id= "getTotal" resultType="int">
+	SELECT count(*) FROM board
+	</select>
 
-
+	<select id="select" parameterType="int" resultType="Board">
+	SELECT * FROM board WHERE NO =#{no}
+	</select>
+	
+	<update id="update" parameterType="Board">
+	UPDATE board
+	SET title = #{title}, content=#{content}
+	WHERE no = #{no}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+	DELETE FROM board
+	WHERE no = #{no}
+	</delete>
+	
 </mapper>
