@@ -23,7 +23,7 @@ public class MemberDAO {
 	}
 	
 	public List<Member> findMember(String keyword){
-		return ("memberMapper.findMember");
+		return sqlSession.selectList("memberMapper.findMember");
 	}
 	/*
 	 * showAllMember

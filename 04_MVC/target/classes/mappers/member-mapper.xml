@@ -8,18 +8,20 @@
 	 <result property="addr" column="address"/>
 	</resultMap>
 	
-	<select id="findMember" parameterType="String" resultType="Member">
-		SELECT *
+	<select id="findMember" parameterType="String" resultType="memberMap">
+		SELECT id, password, name, address
 		FROM member
-		<if test="String != null">
-		WHERE id LIKE '%'||#{String}||'%'
-		OR name LIKE '%'||#{String}||'%'
-		OR addr LIKE '%||#{String}||'%'
+		<where>
+		<if test="keyword != null">
+		id LIKE '%'||#{keyword}||'%'
+		OR name LIKE '%'||#{keyword}||'%'
+		OR address LIKE '%||#{keyword}||'%'
 		</if>
+		</where>
 	</select>
 	
 	<insert id="registerMember" parameterType="Member">
-		INSERT INTO member(id,pwd,name,addr)
+		INSERT INTO member(id,password,name,address)
 		VALUES (#{id}, #{pwd}, #{name}, #{addr})
 	</insert>
 	
@@ -29,8 +31,8 @@
 		WHERE id = #{id} AND pwd = #{pwd}
 	</select>
 	
-	<select id="allMember" resultMap="memberMapper" >
-		SELECT id, pwd, name, addr
+	<select id="allMember" resultMap="memberMap" >
+		SELECT id, password, name, address
 		FROM member
 	</select>
 	
