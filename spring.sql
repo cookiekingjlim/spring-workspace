@@ -64,3 +64,9 @@ WHERE NUM > 20;
  
 
 SELECT ROWNUM NUM, NO, TITLE, CONTENT FROM BOARD;
+
+----------------------------------------------------------------------
+
+ALTER TABLE board ADD url VARCHAR(200);
+
+SELECT * FROM board WHERE no=1;
