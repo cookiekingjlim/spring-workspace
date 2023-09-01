@@ -19,7 +19,26 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="1"/>	<!-- 우선순위를 정하기 위해 -->
 	</beans:bean>
+	
+	<!-- MultipartFile 빈 등록 필수! -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding" value="utf-8"/>
+		<beans:property name="maxUploadSize" value="-1"/>
+	</beans:bean>
+	
+	<!-- Download를 처리하는 빈 등록 -->
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0"/>
+	</beans:bean>
+	
+	<beans:bean name="downloadView" class="com.kh.mvc.util.DownloadView"/>
+	
+	<!-- 
+	BeanNameViewResolver를 우선순위 0으로 했기때문에 View Page의 이름을 찾을 때까지 여기에서 찾는다.
+	찾아서 있으면 결과페이지로 연결하고, 찾았는데 없으면 1순위인 InternalResourceViewResolver 여기를 감.
+	 -->
 	
 	<context:component-scan base-package="com.kh.mvc" />
 	
