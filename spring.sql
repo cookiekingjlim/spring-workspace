@@ -69,4 +69,40 @@ SELECT ROWNUM NUM, NO, TITLE, CONTENT FROM BOARD;
 
 ALTER TABLE board ADD url VARCHAR(200);
 
-SELECT * FROM board WHERE no=1;
+SELECT * FROM board WHERE no=4095;
+
+-------------------------------------------------------------------------
+ DROP TABLE member;
+ 
+ create table member(
+    id varchar2(50) primary key,
+    password varchar2(100) not null,
+    name varchar2(50) not null,
+    address varchar2(200),
+    -- 스프링에서 필수적으로 들고 있어야 함--
+    auth varchar2(50) default 'ROLE_MEMBER' not null,
+    enabled number(1) default 1 not null
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
