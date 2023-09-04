@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	
+	<typeAliases>
+		<typeAlias type="com.kh.security.model.vo.Member" alias="Member"/>
+	</typeAliases>
+	
+	<!-- 단위 테스트를 위해서 추가 -->
+	<environments default="develop">
+		<environment id="develop">
+			<transactionManager type="JDBC"/>
+			<dataSource type="UNPOOLED">
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+				<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+				<property name="username" value="spring"/>
+				<property name="password" value="spring"/>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+		<mapper resource="mappers/member-mapper.xml"/>
+	</mappers>
+</configuration>

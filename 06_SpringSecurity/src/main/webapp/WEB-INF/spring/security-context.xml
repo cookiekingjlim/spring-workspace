@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+    
+    <!-- 핸들러 빈 참조 위한 등록 -->
+	<bean id="loginSuccess" class="com.kh.security.LoginSuccessHandler"/>
+	<bean id="AccessDenied" class="com.kh.security.CustomAcessDeniedHandler"/>
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+	
+	<context:component-scan base-package="com.kh.security"/>
+	<bean id="memberService" class="com.kh.security.model.service.MemberService"/>
+
+	<security:http>
+		<security:intercept-url pattern="/all" access="permitAll"/>
+		<!--hasRole, hasAnyRole(다수) ROLE_MEMBER가 있어야만 접근할 수 있는 역할을 부여... -->
+		<security:intercept-url pattern="/member" access="hasAnyRole('ROLE_MEMBER', 'ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
+		
+		<security:form-login login-page="/login" authentication-success-handler-ref="loginSuccess"/>
+	
+		<!-- csrf 쓰지 않고 바로 로그아웃 처리하겠다. -->
+		<security:csrf disabled="true"/>
+		<security:logout logout-url="/logout" invalidate-session="true"/>
+		
+		<!-- 핸들러 지정하지 않고 바로 에러페이지로 보내는 방식 단 컨트롤러에는 명시 필요 -->
+		<!-- <security:access-denied-handler error-page="/error"/> -->
+		
+		<!-- 핸들러로 넘겨주는 방식 -->
+		<security:access-denied-handler ref="AccessDenied"/>
+	</security:http>
+	
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="memberService">
+		
+			<!-- 
+			<security:user-service>
+					noop => enconder(필수) 사용 안 하고 이 패스워드를 바로 사용하겠다. 
+				<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER"/>
+				<security:user name="admin" password="{noop}admin" authorities="ROLE_ADMIN"/>
+			</security:user-service> 
+			-->
+		<security:password-encoder hash="bcrypt"/>
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+</beans>
