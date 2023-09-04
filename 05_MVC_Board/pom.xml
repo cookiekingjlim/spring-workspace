@@ -161,6 +161,27 @@
     <version>1.5</version>
 </dependency>
 
+		    <!-- Spring Security -->
+<dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-web</artifactId>
+    <version>${org.springframework-version}</version>
+</dependency>
+
+		    <!-- Spring Security -->
+<dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-config</artifactId>
+    <version>${org.springframework-version}</version>
+</dependency>
+
+		    <!-- Spring Security -->
+<dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-taglibs</artifactId>
+    <version>${org.springframework-version}</version>
+</dependency>
+
 
 	</dependencies>
     <build>
