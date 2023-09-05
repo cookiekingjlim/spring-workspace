@@ -7,10 +7,26 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.2.xsd">
 
-<security:http>
-	<security:form-login/>
-</security:http>
-<security:authentication-manager>
+<!-- 빈 등록하기 위해 먼저 스캔부터 -->
+<context:component-scan base-package="com.kh.mvc"/>
+<bean id="memberService" class="com.kh.mvc.model.service.MemberService"/>
+<bean id="loginSuccess" class="com.kh.mvc.LoginSuccessHandler"></bean>
+<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
+
+<security:http>
+	<security:intercept-url pattern="/board/list" access="permitAll"/>
+	<security:intercept-url pattern="/board/insert" access="hasRole('ROLE_MEMBER')"/>
+	<security:intercept-url pattern="/board/upadate" access="hasRole('ROLE_MEMBER')"/>
+	<security:csrf disabled="true"/>
+	<security:form-login login-page="/member/login" authentication-success-handler-ref="loginSuccess"/>
+	
+</security:http>
+
+<security:authentication-manager>
+	<security:authentication-provider user-service-ref="memberService">
+		<security:password-encoder hash="bcrypt"/>
+	</security:authentication-provider>
 </security:authentication-manager>
+
 </beans>

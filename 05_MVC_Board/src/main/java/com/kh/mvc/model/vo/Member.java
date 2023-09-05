@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Data;
 
+//@SuppressWarnings("serial")
 @Data
 public class Member implements UserDetails{
 	private String id;
@@ -25,6 +26,11 @@ public class Member implements UserDetails{
 		return authList;
 	}
 
+	@Override
+	public String getPassword() {
+		return password;
+	}
+	
 	@Override
 	public String getUsername() {
 		return id;

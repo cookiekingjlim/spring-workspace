@@ -12,11 +12,11 @@ public class MemberDAO {
 	private SqlSessionTemplate session;
 	
 	public int registerMember(Member vo) {
-		return session.insert("memberMapper.registerMember", vo);
+		return session.insert("member.registerMember", vo);
 	}
 	
 	public Member getMemberById(String id) {
-		return session.selectOne("memberMapper.getMemberById", id);
+		return session.selectOne("member.getMemberById", id);
 	}
 	
 	

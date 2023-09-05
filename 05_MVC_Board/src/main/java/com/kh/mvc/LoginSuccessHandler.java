@@ -15,25 +15,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication) throws IOException, ServletException {
+		Authentication authentication) throws IOException, ServletException {
 		
-		List<String> roleList = new ArrayList();
+		response.sendRedirect("/board/list");
 		
-		authentication.getAuthorities().forEach(auth -> {
-			System.out.println("auth : " + auth);
-			roleList.add(auth.getAuthority());
-		});
-		
-		if(roleList.contains("ROLE_MEMBER")) {
-			response.sendRedirect("../board/list");
-			return;
-		}
-		
-		if(roleList.contains("ROLE_ADMIN")) {
-			response.sendRedirect("../member/admin");
-			return;
-		}
-		response.sendRedirect("../member/all");
 	}
 
 }
