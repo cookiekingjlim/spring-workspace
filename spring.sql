@@ -111,7 +111,9 @@ insert into userinfo values('member','member');
 insert into userinfo values('admin','admin');
 commit;
 
-
+SELECT * FROM phone;
+SELECT * FROM company;
+SELECT * FROM userinfo;
 
 
 
